@@ -1,4 +1,5 @@
-        extern    printf            ; external c functions         
+    extern    printf            ; external c functions
+        
     extern    strtoul            
 
     global    main              ; global entry        
@@ -14,9 +15,6 @@ Usage:
 
 Fib_num:
     db "%016lx%016lx%016lx%016lx%016lx%016lx", 10, 0        ; print string for fibonacci 
-
-Zero:
-    db "0", 10, 0
 
 ; array of qwords to store large fibonacci number
 Huge_numA:
