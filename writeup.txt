@@ -1,0 +1,43 @@
+Name: Michael DeLegge
+Date: 10 NOV 2017
+Current Module: Assembly
+Project Name: Fibonacci
+
+Project Goals:
+    Write a program in assembly language that uses the first command line parameter  as a number N from 0 to 500. The program should print out F(N), in hexadecimal. 
+
+Considerations:
+    -Figuring out how to write in assembly
+    -500th number creates a giant number that will overflow a single registry
+    -One-off number outputs
+    -Correctly storing data in registries
+    -Account for edge cases
+
+Initial Design:
+    The program has three sections. .data has the format strings to echo the command line, usage errors, the Fibonacci number print statement, and Huge_num A and B, which hold the values for the Fibonacci number. The .bss section sets the values for x, which is the integer from arg1, and temp which is used for echoing the command line. The .text section has the code that makes the program run the Fibonacci sequence. .text has: main, which converts arg1 into a ul and is used to decrement the count of the Fibonacci sequence, Fib_loop which does the math for the sequence, Print_fib which prints the final number, Print_zero which prints a bunch of zeros if the user enters a 0, and Usage_Errors which accounts for bad user input.
+
+Data Flow:
+    The program starts by checking to see if the user entered two command line parameters, if not an error message is printed. If the program name and a number are entered, the program converts arg1 to an unsigned long and checks the value. If arg1 is 0, the program jumps to Print_zero, which prints out a bunch of zeros and the program exits. If it is any other value up to and including 500 the program continues to Fib_loop. In Fib_loop argv1, which is stored in x, is decremented by one and Huge_numA and Huge_numB are populated into the appropriate registers and the Fibonacci equation is calculated. This loop continues until x is decremented to 0, at which time the program jumps to Print_fib. The corresponding Fibonacci number prints and the program exits. 
+Communication Protocol:
+    No communication protocols were used for this project.
+
+Potential Pitfalls:
+    -Learning assembly
+    -Ensuring the program can handle the large hex number
+    -Not clearing registries/ printing out garbage
+    -Putting wrong information in registries
+
+Test Plan:
+    User Test:
+        -Words instead of numbers
+        -Numbers that are too high and too low
+        -Too much input and anything else a dumb user could do
+    Test Cases:
+        -Test all cases from PDF supplement (100, 200, 300, 400, 500)
+        -Test 0 case
+
+Conclusion:
+    Overall I think the project went OK. Considering We have only been doing assembly for three days and had to shorten lecture by one day because of Veteran's Day I think this program is as good as it's going to get for now. The task was appropriately difficult and took a lot of learn-as-you-go to get the completed program. Given more time and exposure to more assembly this program could definitely be improved. One thing I could have improved was the 0 edge case where I reused a block of code, but I'm sure there is a more efficient way of handling that case. 
+
+
+
