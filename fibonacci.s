@@ -1,9 +1,9 @@
-    extern    printf            
+        extern    printf            ; external c functions         
     extern    strtoul            
 
-    global    main            
+    global    main              ; global entry        
 
-    section    .data            
+    section   .data            
 
 Echo:
     db "You entered: %s %s", 10, 0
@@ -18,6 +18,7 @@ Fib_num:
 Zero:
     db "0", 10, 0
 
+; array of qwords to store large fibonacci number
 Huge_numA:
     dq  0x0000000000000000
     dq  0
@@ -57,15 +58,16 @@ main:
     mov     rdi, [r15 + 8]      ; convert first argument to long integer and store return value in x.
     mov     rdx, 10
     call    strtoul
-    mov     qword[x], rax       ;copy strtoul return value in x
+    mov     qword[x], rax       ; copy strtoul return value in x
 
-    cmp     qword[x], 0
+    cmp     qword[x], 0         ; if user entered zero
     je      Print_zero
 
+; loop to calculate fibonacci number
 Fib_loop:
-    dec     qword[x]            ;value from command line stored as x, and decriment 
-    cmp     qword[x], 0         ;until x reaches 0
-    je      Print_fib           ;if x equals 0 then jump to Print_fib function
+    dec     qword[x]            ; value from command line stored as x, and decriment 
+    cmp     qword[x], 0         ; until x reaches 0
+    je      Print_fib           ; if x equals 0 then jump to Print_fib function
 
     mov     r8, [Huge_numB]
     mov     r12, [Huge_numA]
@@ -108,7 +110,7 @@ Fib_loop:
 
     jmp     Fib_loop
 
-Print_fib:
+Print_fib:                          ; prints fibonacci number after loop completes
     mov     rdi, Fib_num
     mov     rsi, [Huge_numB+40]
     mov     rdx, [Huge_numB+32]
@@ -121,9 +123,9 @@ Print_fib:
     pop     qword[Huge_numB]
     jmp     Return
 
-Print_zero:
-    mov     rdi, Fib_num
-    mov     rsi, [Huge_numA+40]
+Print_zero:                         ; print all 0's if user entered a 0
+    mov     rdi, Fib_num            ; there is probably a better way to handle this
+    mov     rsi, [Huge_numA+40]     
     mov     rdx, [Huge_numA+32]
     mov     rcx, [Huge_numA+24]
     mov     r8, [Huge_numA+16]
